@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "mkzluglgz0tlhelldhf",
+    "name": "work",
+    "color": "#EF4444",
+    "description": "",
+    "createdAt": "2026-01-29T15:24:26.116Z"
+  },
+  {
+    "_id": "mkzme86v149fhw02xfz",
+    "name": "בית",
+    "color": "#3B82F6",
+    "description": "",
+    "createdAt": "2026-01-29T15:39:48.343Z"
+  },
+  {
+    "_id": "mkzmu2xbxjv6y05bf7j",
+    "name": "פיננסי",
+    "color": "#10B981",
+    "description": "",
+    "createdAt": "2026-01-29T15:52:08.015Z"
+  }
+]
