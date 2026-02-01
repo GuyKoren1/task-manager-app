@@ -2,18 +2,24 @@ import { tasksDB, categoriesDB } from '../config/storageFactory.js';
 
 // Helper to populate categories
 const populateCategories = async (task) => {
-  if (!task.categories || task.categories.length === 0) return task;
+  // Convert Mongoose document to plain object
+  const plainTask = task.toObject ? task.toObject() : task;
+
+  if (!plainTask.categories || plainTask.categories.length === 0) return plainTask;
 
   const allCategories = await categoriesDB.find();
   const populated = {
-    ...task,
-    categories: task.categories
+    ...plainTask,
+    categories: plainTask.categories
       .map(catId => {
         const cat = allCategories.find(c => c._id.toString() === catId.toString());
         return cat;
       })
       .filter(Boolean)
-      .map(c => ({ _id: c._id, name: c.name, color: c.color, icon: c.icon }))
+      .map(c => {
+        const plainCat = c.toObject ? c.toObject() : c;
+        return { _id: plainCat._id, name: plainCat.name, color: plainCat.color, icon: plainCat.icon };
+      })
   };
   return populated;
 };

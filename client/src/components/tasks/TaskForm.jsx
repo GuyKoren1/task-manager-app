@@ -48,14 +48,6 @@ const TaskForm = ({ task, onSuccess }) => {
       tags: formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : []
     };
 
-    // Debug logging
-    console.log('=== TASK FORM SUBMISSION ===');
-    console.log('Form Data:', formData);
-    console.log('Submit Data:', submitData);
-    console.log('Title:', submitData.title);
-    console.log('Title length:', submitData.title?.length);
-    console.log('===========================');
-
     if (task) {
       updateTask.mutate(
         { id: task._id, data: submitData },

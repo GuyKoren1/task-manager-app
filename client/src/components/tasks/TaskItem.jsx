@@ -63,7 +63,7 @@ const TaskItem = ({ task }) => {
             {/* Main row with title, badges, and metadata */}
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="text-sm font-semibold text-gray-900 truncate">
-                {task.title ? task.title : <span className="text-red-500 italic">No title - Error</span>}
+                {task.title || 'Untitled Task'}
               </h3>
               <Badge variant={task.priority || 'medium'}>{task.priority || 'medium'}</Badge>
               <Badge variant={task.status || 'pending'}>
