@@ -363,11 +363,11 @@ Before sharing your app publicly:
 
 ## Your Live URLs
 
-After deployment, save these URLs:
+Your deployed application:
 
-- **Frontend**: `https://task-manager-app-xxxx.vercel.app`
-- **Backend**: `https://task-manager-backend-xxxx.onrender.com`
-- **API Health Check**: `https://task-manager-backend-xxxx.onrender.com/api/health`
+- **Frontend**: https://task-manager-app-seven-murex.vercel.app/
+- **Backend**: https://task-manager-backend-7lie.onrender.com
+- **API Health Check**: https://task-manager-backend-7lie.onrender.com/api/health
 
 Share the frontend URL with anyone! 🎉
 

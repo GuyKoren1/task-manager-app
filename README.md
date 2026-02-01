@@ -454,6 +454,13 @@ CORS_ORIGIN=http://localhost:5173
 
 Want to access your Task Manager from anywhere? Deploy it online!
 
+### 🌐 Live Application
+
+This app is deployed and accessible at:
+- **Frontend**: https://task-manager-app-seven-murex.vercel.app/
+- **Backend API**: https://task-manager-backend-7lie.onrender.com
+- **Health Check**: https://task-manager-backend-7lie.onrender.com/api/health
+
 ### 📚 Deployment Guides
 
 - **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Complete step-by-step guide
@@ -461,7 +468,7 @@ Want to access your Task Manager from anywhere? Deploy it online!
 
 ### 🚀 Quick Overview
 
-Deploy for **FREE** using:
+Deployed for **FREE** using:
 - **Backend**: Render.com (free tier)
 - **Frontend**: Vercel (free tier)
 - **Database**: MongoDB Atlas (already configured)
@@ -474,7 +481,7 @@ The guides cover:
 5. Testing your live app
 6. Troubleshooting common issues
 
-After deployment, you'll have a URL like `https://task-manager-app.vercel.app` that you can access from any device, anywhere in the world!
+Access from any device, anywhere in the world! 📱💻
 
 ## Future Enhancements
 

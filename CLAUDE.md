@@ -289,16 +289,21 @@ curl -X POST http://localhost:5000/api/tasks \
 
 ## Deployment
 
-To deploy this application online for access from anywhere:
+This application is deployed and accessible from anywhere:
 
-### Quick Start
+### Live URLs
+- **Frontend**: https://task-manager-app-seven-murex.vercel.app/
+- **Backend**: https://task-manager-backend-7lie.onrender.com
+- **API Health**: https://task-manager-backend-7lie.onrender.com/api/health
+
+### Deployment Guides
 1. See **DEPLOYMENT_GUIDE.md** for detailed step-by-step instructions
 2. Use **DEPLOY_CHECKLIST.md** for a quick reference checklist
 
-### Recommended Stack (Free Tier)
-- **Database**: MongoDB Atlas (already configured)
-- **Backend**: Render.com or Railway
-- **Frontend**: Vercel or Netlify
+### Deployment Stack (Free Tier)
+- **Database**: MongoDB Atlas (cloud database)
+- **Backend**: Render.com (Node.js API server)
+- **Frontend**: Vercel (React app hosting)
 
 ### Key Deployment Steps
 1. Setup MongoDB Atlas network access (allow 0.0.0.0/0)

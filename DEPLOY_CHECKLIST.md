@@ -119,13 +119,13 @@ vercel
 
 ---
 
-## 📝 Save Your URLs
+## 📝 Your Live URLs
 
-**Frontend**: _________________________________
+**Frontend**: https://task-manager-app-seven-murex.vercel.app/
 
-**Backend**: _________________________________
+**Backend**: https://task-manager-backend-7lie.onrender.com
 
-**API Health**: _________________________________
+**API Health**: https://task-manager-backend-7lie.onrender.com/api/health
 
 ---
 
