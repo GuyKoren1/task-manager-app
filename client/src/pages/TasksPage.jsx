@@ -7,6 +7,7 @@ import TaskFilters from '../components/tasks/TaskFilters';
 import TaskForm from '../components/tasks/TaskForm';
 import Modal from '../components/common/Modal';
 import Button from '../components/common/Button';
+import ErrorBoundary from '../components/common/ErrorBoundary';
 
 const TasksPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,7 +52,9 @@ const TasksPage = () => {
 
           <TaskFilters filters={filters} onFilterChange={setFilters} />
 
-          <TaskList tasks={tasks} isLoading={isLoading} />
+          <ErrorBoundary>
+            <TaskList tasks={tasks} isLoading={isLoading} />
+          </ErrorBoundary>
         </div>
       </div>
 

@@ -14,6 +14,11 @@ const TaskItem = ({ task }) => {
   const deleteTask = useDeleteTask();
   const updateStatus = useUpdateTaskStatus();
 
+  // Safety check
+  if (!task) {
+    return null;
+  }
+
   const handleStatusChange = (newStatus) => {
     updateStatus.mutate({ id: task._id, status: newStatus });
   };
@@ -33,6 +38,23 @@ const TaskItem = ({ task }) => {
     return colors[priority] || colors.medium;
   };
 
+  // Safe date formatting
+  const formatDate = (date) => {
+    try {
+      return format(new Date(date), 'MMM dd');
+    } catch (e) {
+      return 'Invalid date';
+    }
+  };
+
+  const formatTime = (date) => {
+    try {
+      return format(new Date(date), 'h:mm a');
+    } catch (e) {
+      return 'Invalid time';
+    }
+  };
+
   return (
     <>
       <div className={`bg-white border-l-4 ${getPriorityColor(task.priority)} rounded shadow-sm p-2 hover:shadow transition-shadow`}>
@@ -40,37 +62,37 @@ const TaskItem = ({ task }) => {
           <div className="flex-1 min-w-0">
             {/* Main row with title, badges, and metadata */}
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-semibold text-gray-900 truncate">{task.title}</h3>
-              <Badge variant={task.priority}>{task.priority}</Badge>
-              <Badge variant={task.status}>
-                {task.status.replace('_', ' ')}
+              <h3 className="text-sm font-semibold text-gray-900 truncate">{task.title || 'Untitled'}</h3>
+              <Badge variant={task.priority || 'medium'}>{task.priority || 'medium'}</Badge>
+              <Badge variant={task.status || 'pending'}>
+                {(task.status || 'pending').replace('_', ' ')}
               </Badge>
 
               {/* Inline metadata */}
               {task.dueDate && (
                 <div className="flex items-center gap-1 text-xs text-gray-500">
                   <IoCalendar size={12} />
-                  <span>{format(new Date(task.dueDate), 'MMM dd')}</span>
+                  <span>{formatDate(task.dueDate)}</span>
                 </div>
               )}
 
               {task.reminderDate && (
                 <div className="flex items-center gap-1 text-xs text-gray-400">
                   <IoAlarm size={12} />
-                  <span>{format(new Date(task.reminderDate), 'h:mm a')}</span>
+                  <span>{formatTime(task.reminderDate)}</span>
                 </div>
               )}
 
               {/* Categories inline */}
               {task.categories && task.categories.length > 0 && (
                 <>
-                  {task.categories.map((category) => (
+                  {task.categories.filter(cat => cat && cat._id).map((category) => (
                     <span
                       key={category._id}
                       className="px-1.5 py-0.5 rounded text-xs font-medium text-white"
-                      style={{ backgroundColor: category.color }}
+                      style={{ backgroundColor: category.color || '#6B7280' }}
                     >
-                      {category.name}
+                      {category.name || 'Unknown'}
                     </span>
                   ))}
                 </>
