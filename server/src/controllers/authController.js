@@ -55,12 +55,12 @@ export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   // Find user by email (include password for verification)
-  // Check if using Mongoose (has schema property) to determine if we need to select password
-  const isMongoose = User.schema !== undefined;
+  // Check storage type to determine if we need to explicitly select password
+  const isMongoStorage = process.env.STORAGE_TYPE === 'mongodb';
 
   let user;
-  if (isMongoose) {
-    // For Mongoose, explicitly select password field
+  if (isMongoStorage) {
+    // For MongoDB/Mongoose, explicitly select password field (it's excluded by default)
     user = await User.findOne({ email }).select('+password');
   } else {
     // For file storage, password is already included
