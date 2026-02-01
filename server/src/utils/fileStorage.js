@@ -54,6 +54,10 @@ export const tasksDB = {
           if (key === 'categories' && Array.isArray(query[key])) {
             return task.categories && task.categories.includes(query[key]);
           }
+          // Handle user field comparison (convert to string for comparison)
+          if (key === 'user') {
+            return task[key] && task[key].toString() === query[key].toString();
+          }
           return task[key] === query[key];
         });
       });
@@ -126,8 +130,23 @@ export const tasksDB = {
 
 // Categories operations
 export const categoriesDB = {
-  find: () => {
-    return readData(CATEGORIES_FILE);
+  find: (query = {}) => {
+    let categories = readData(CATEGORIES_FILE);
+
+    // Filter by query (especially for user)
+    if (Object.keys(query).length > 0) {
+      categories = categories.filter(category => {
+        return Object.keys(query).every(key => {
+          // Handle user field comparison (convert to string for comparison)
+          if (key === 'user') {
+            return category[key] && category[key].toString() === query[key].toString();
+          }
+          return category[key] === query[key];
+        });
+      });
+    }
+
+    return categories;
   },
 
   findById: (id) => {
@@ -138,8 +157,8 @@ export const categoriesDB = {
   create: (data) => {
     const categories = readData(CATEGORIES_FILE);
 
-    // Check for duplicate name
-    if (categories.some(cat => cat.name === data.name)) {
+    // Check for duplicate name within same user
+    if (data.user && categories.some(cat => cat.name === data.name && cat.user === data.user)) {
       throw new Error('Category name already exists');
     }
 
@@ -160,13 +179,19 @@ export const categoriesDB = {
 
     if (index === -1) return null;
 
-    // Check for duplicate name (excluding current category)
-    if (data.name && categories.some(cat => cat.name === data.name && cat._id !== id)) {
+    const currentCategory = categories[index];
+
+    // Check for duplicate name within same user (excluding current category)
+    if (data.name && categories.some(cat =>
+      cat.name === data.name &&
+      cat._id !== id &&
+      cat.user === currentCategory.user
+    )) {
       throw new Error('Category name already exists');
     }
 
     const updatedCategory = {
-      ...categories[index],
+      ...currentCategory,
       ...data
     };
 

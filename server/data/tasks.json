@@ -15,7 +15,8 @@
     ],
     "createdAt": "2026-01-29T15:34:52.540Z",
     "updatedAt": "2026-01-29T15:34:52.540Z",
-    "reminderSent": false
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzm8brxdog7gg8xt05",
@@ -35,7 +36,8 @@
     "createdAt": "2026-01-29T15:35:13.053Z",
     "updatedAt": "2026-01-29T15:35:23.352Z",
     "reminderSent": false,
-    "completedAt": null
+    "completedAt": null,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzme2bzdh9wpwup1bq",
@@ -54,7 +56,8 @@
     "createdAt": "2026-01-29T15:39:40.751Z",
     "updatedAt": "2026-01-29T15:51:37.594Z",
     "reminderSent": false,
-    "completedAt": null
+    "completedAt": null,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzmmqpl89gyp6finur",
@@ -74,7 +77,8 @@
     "createdAt": "2026-01-29T15:46:25.593Z",
     "updatedAt": "2026-01-29T15:46:44.529Z",
     "reminderSent": false,
-    "completedAt": null
+    "completedAt": null,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzmn2hq273yvkul7pq",
@@ -93,7 +97,8 @@
     ],
     "createdAt": "2026-01-29T15:46:40.862Z",
     "updatedAt": "2026-01-29T15:46:40.862Z",
-    "reminderSent": false
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzmuedynxr3i94buno",
@@ -109,7 +114,8 @@
     "tags": [],
     "createdAt": "2026-01-29T15:52:22.870Z",
     "updatedAt": "2026-01-29T15:52:22.870Z",
-    "reminderSent": false
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzn2e4p5ym26x2jod3",
@@ -128,7 +134,8 @@
     ],
     "createdAt": "2026-01-29T15:58:35.785Z",
     "updatedAt": "2026-01-29T15:58:35.785Z",
-    "reminderSent": false
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzpyofs7pi2dhwlza3",
@@ -144,7 +151,8 @@
     "tags": [],
     "createdAt": "2026-01-29T17:19:41.368Z",
     "updatedAt": "2026-01-29T17:19:41.368Z",
-    "reminderSent": false
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzpzcziqmgcbqarvj8",
@@ -163,7 +171,8 @@
     ],
     "createdAt": "2026-01-29T17:20:13.182Z",
     "updatedAt": "2026-01-29T17:20:13.182Z",
-    "reminderSent": false
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "ml0mz6vamt6q6nfwvue",
@@ -179,7 +188,8 @@
     "tags": [],
     "createdAt": "2026-01-30T08:43:52.582Z",
     "updatedAt": "2026-01-30T08:43:52.582Z",
-    "reminderSent": false
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "ml0neuuujfiy8flmukk",
@@ -195,6 +205,18 @@
     "tags": [],
     "createdAt": "2026-01-30T08:56:03.510Z",
     "updatedAt": "2026-01-30T08:56:03.510Z",
+    "reminderSent": false,
+    "user": "default-user-ml3lfbx0"
+  },
+  {
+    "_id": "ml3lnq600e1dem8ug2z6",
+    "title": "My First Task",
+    "description": "This is a test task",
+    "priority": "high",
+    "status": "pending",
+    "user": "ml3lljryu8w4a73t7i",
+    "createdAt": "2026-02-01T10:30:16.632Z",
+    "updatedAt": "2026-02-01T10:30:16.632Z",
     "reminderSent": false
   }
 ]

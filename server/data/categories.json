@@ -4,20 +4,31 @@
     "name": "work",
     "color": "#EF4444",
     "description": "",
-    "createdAt": "2026-01-29T15:24:26.116Z"
+    "createdAt": "2026-01-29T15:24:26.116Z",
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzme86v149fhw02xfz",
     "name": "בית",
     "color": "#3B82F6",
     "description": "",
-    "createdAt": "2026-01-29T15:39:48.343Z"
+    "createdAt": "2026-01-29T15:39:48.343Z",
+    "user": "default-user-ml3lfbx0"
   },
   {
     "_id": "mkzmu2xbxjv6y05bf7j",
     "name": "פיננסי",
     "color": "#10B981",
     "description": "",
-    "createdAt": "2026-01-29T15:52:08.015Z"
+    "createdAt": "2026-01-29T15:52:08.015Z",
+    "user": "default-user-ml3lfbx0"
+  },
+  {
+    "_id": "ml3lol5iddwufvoxs5m",
+    "name": "Personal",
+    "color": "#10B981",
+    "icon": "user",
+    "user": "ml3lljryu8w4a73t7i",
+    "createdAt": "2026-02-01T10:30:56.790Z"
   }
 ]

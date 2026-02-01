@@ -50,6 +50,11 @@ const taskSchema = new mongoose.Schema({
   }],
   completedAt: {
     type: Date
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, {
   timestamps: true
@@ -72,6 +77,7 @@ taskSchema.index({ priority: 1 });
 taskSchema.index({ dueDate: 1 });
 taskSchema.index({ reminderDate: 1, reminderSent: 1 });
 taskSchema.index({ categories: 1 });
+taskSchema.index({ user: 1 });
 
 const Task = mongoose.model('Task', taskSchema);
 

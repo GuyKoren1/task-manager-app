@@ -1,13 +1,14 @@
 import { tasksDB, categoriesDB } from '../config/storageFactory.js';
 
 // Helper to populate categories
-const populateCategories = async (task) => {
+const populateCategories = async (task, userId) => {
   // Convert Mongoose document to plain object
   const plainTask = task.toObject ? task.toObject() : task;
 
   if (!plainTask.categories || plainTask.categories.length === 0) return plainTask;
 
-  const allCategories = await categoriesDB.find();
+  // Only get categories belonging to the user
+  const allCategories = await categoriesDB.find({ user: userId });
   const populated = {
     ...plainTask,
     categories: plainTask.categories
@@ -40,7 +41,8 @@ export const getTasks = async (req, res, next) => {
       dueDateTo
     } = req.query;
 
-    let tasks = await tasksDB.find();
+    // Filter by user
+    let tasks = await tasksDB.find({ user: req.user.id });
 
     // Apply filters
     if (status) {
@@ -100,7 +102,7 @@ export const getTasks = async (req, res, next) => {
     const paginatedTasks = tasks.slice(start, start + limitNum);
 
     // Populate categories
-    const populatedTasks = await Promise.all(paginatedTasks.map(populateCategories));
+    const populatedTasks = await Promise.all(paginatedTasks.map(t => populateCategories(t, req.user.id)));
 
     res.status(200).json({
       success: true,
@@ -127,7 +129,15 @@ export const getTask = async (req, res, next) => {
       });
     }
 
-    const populated = await populateCategories(task);
+    // Verify ownership
+    if (task.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        error: 'Not authorized to access this task'
+      });
+    }
+
+    const populated = await populateCategories(task, req.user.id);
 
     res.status(200).json({
       success: true,
@@ -141,8 +151,14 @@ export const getTask = async (req, res, next) => {
 // Create task
 export const createTask = async (req, res, next) => {
   try {
-    const task = await tasksDB.create(req.body);
-    const populated = await populateCategories(task);
+    // Add user to task data
+    const taskData = {
+      ...req.body,
+      user: req.user.id
+    };
+
+    const task = await tasksDB.create(taskData);
+    const populated = await populateCategories(task, req.user.id);
 
     res.status(201).json({
       success: true,
@@ -156,16 +172,26 @@ export const createTask = async (req, res, next) => {
 // Update task
 export const updateTask = async (req, res, next) => {
   try {
-    const task = await tasksDB.update(req.params.id, req.body);
+    // First check if task exists and belongs to user
+    const existingTask = await tasksDB.findById(req.params.id);
 
-    if (!task) {
+    if (!existingTask) {
       return res.status(404).json({
         success: false,
         error: 'Task not found'
       });
     }
 
-    const populated = await populateCategories(task);
+    // Verify ownership
+    if (existingTask.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        error: 'Not authorized to update this task'
+      });
+    }
+
+    const task = await tasksDB.update(req.params.id, req.body);
+    const populated = await populateCategories(task, req.user.id);
 
     res.status(200).json({
       success: true,
@@ -188,16 +214,26 @@ export const updateTaskStatus = async (req, res, next) => {
       });
     }
 
-    const task = await tasksDB.update(req.params.id, { status });
+    // Check ownership before updating
+    const existingTask = await tasksDB.findById(req.params.id);
 
-    if (!task) {
+    if (!existingTask) {
       return res.status(404).json({
         success: false,
         error: 'Task not found'
       });
     }
 
-    const populated = await populateCategories(task);
+    // Verify ownership
+    if (existingTask.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        error: 'Not authorized to update this task'
+      });
+    }
+
+    const task = await tasksDB.update(req.params.id, { status });
+    const populated = await populateCategories(task, req.user.id);
 
     res.status(200).json({
       success: true,
@@ -211,14 +247,25 @@ export const updateTaskStatus = async (req, res, next) => {
 // Delete task
 export const deleteTask = async (req, res, next) => {
   try {
-    const result = await tasksDB.delete(req.params.id);
+    // Check ownership before deleting
+    const existingTask = await tasksDB.findById(req.params.id);
 
-    if (!result) {
+    if (!existingTask) {
       return res.status(404).json({
         success: false,
         error: 'Task not found'
       });
     }
+
+    // Verify ownership
+    if (existingTask.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        error: 'Not authorized to delete this task'
+      });
+    }
+
+    const result = await tasksDB.delete(req.params.id);
 
     res.status(200).json({
       success: true,
@@ -232,7 +279,8 @@ export const deleteTask = async (req, res, next) => {
 // Get statistics
 export const getStatistics = async (req, res, next) => {
   try {
-    const tasks = await tasksDB.find();
+    // Filter by user
+    const tasks = await tasksDB.find({ user: req.user.id });
 
     const byStatus = {
       pending: 0,
@@ -275,7 +323,8 @@ export const getUpcomingTasks = async (req, res, next) => {
     const nextWeek = new Date(today);
     nextWeek.setDate(nextWeek.getDate() + 7);
 
-    let tasks = await tasksDB.find();
+    // Filter by user
+    let tasks = await tasksDB.find({ user: req.user.id });
 
     tasks = tasks.filter(task =>
       task.dueDate &&
@@ -287,7 +336,7 @@ export const getUpcomingTasks = async (req, res, next) => {
     tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
     tasks = tasks.slice(0, 10);
 
-    const populatedTasks = await Promise.all(tasks.map(populateCategories));
+    const populatedTasks = await Promise.all(tasks.map(t => populateCategories(t, req.user.id)));
 
     res.status(200).json({
       success: true,

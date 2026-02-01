@@ -4,7 +4,6 @@ const categorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Category name is required'],
-    unique: true,
     trim: true,
     maxlength: [50, 'Category name cannot exceed 50 characters']
   },
@@ -20,10 +19,18 @@ const categorySchema = new mongoose.Schema({
   description: {
     type: String,
     maxlength: [200, 'Description cannot exceed 200 characters']
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, {
   timestamps: true
 });
+
+// Compound index to allow same category name for different users
+categorySchema.index({ name: 1, user: 1 }, { unique: true });
 
 const Category = mongoose.model('Category', categorySchema);
 

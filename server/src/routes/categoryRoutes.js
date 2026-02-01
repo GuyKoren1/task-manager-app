@@ -8,6 +8,7 @@ import {
   deleteCategory
 } from '../controllers/categoryController.js';
 import { validate } from '../middleware/validator.js';
+import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -33,12 +34,12 @@ const categoryValidation = [
 ];
 
 router.route('/')
-  .get(getCategories)
-  .post(categoryValidation, validate, createCategory);
+  .get(protect, getCategories)
+  .post(protect, categoryValidation, validate, createCategory);
 
 router.route('/:id')
-  .get(getCategory)
-  .put(categoryValidation, validate, updateCategory)
-  .delete(deleteCategory);
+  .get(protect, getCategory)
+  .put(protect, categoryValidation, validate, updateCategory)
+  .delete(protect, deleteCategory);
 
 export default router;

@@ -11,6 +11,7 @@ import {
   getUpcomingTasks
 } from '../controllers/taskController.js';
 import { validate } from '../middleware/validator.js';
+import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -52,20 +53,20 @@ const taskValidation = [
     .withMessage('Tags must be an array')
 ];
 
-// Statistics routes
-router.get('/stats/overview', getStatistics);
-router.get('/stats/upcoming', getUpcomingTasks);
+// Statistics routes (all protected)
+router.get('/stats/overview', protect, getStatistics);
+router.get('/stats/upcoming', protect, getUpcomingTasks);
 
-// Main task routes
+// Main task routes (all protected)
 router.route('/')
-  .get(getTasks)
-  .post(taskValidation, validate, createTask);
+  .get(protect, getTasks)
+  .post(protect, taskValidation, validate, createTask);
 
 router.route('/:id')
-  .get(getTask)
-  .put(taskValidation, validate, updateTask)
-  .delete(deleteTask);
+  .get(protect, getTask)
+  .put(protect, taskValidation, validate, updateTask)
+  .delete(protect, deleteTask);
 
-router.patch('/:id/status', updateTaskStatus);
+router.patch('/:id/status', protect, updateTaskStatus);
 
 export default router;
